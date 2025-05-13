@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import DeviseSelect from './components/DeviseSelect';
+
 
 function App() {
   const [amount, setAmount] = useState(1)
@@ -21,17 +23,6 @@ function App() {
     { name: "GBP", value: "GBP" },
     { name: "JPY", value: "JPY" }
   ]
-  const deviseOptions = deviseList.map((devise) => (
-    <option key={devise.value} value={devise.value}>
-      {devise.name}
-    </option>
-  ))
-
-  const deviseOptions2 = deviseList.map((devise) => (
-    <option key={devise.value} value={devise.value}>
-      {devise.name}
-    </option>
-  ))
 
   const determineConversionRate = (fromDevise, toDevise) => {
     if (fromDevise === toDevise) {
@@ -75,21 +66,20 @@ function App() {
           />
         </div>
         <div className='devise'>
-          <h2>Devise de départ</h2>
-          <select 
-            value={fromDevise}
-            onChange={(e) => setFromDevise(e.target.value)}
-          >
-            {deviseOptions}
-          </select>
 
-          <h2>Devise de destination</h2>
-          <select 
+          <DeviseSelect 
+            value={fromDevise}
+            onChange={setFromDevise}
+            deviseList={deviseList}
+            label="Devise de départ"
+          />
+
+          <DeviseSelect 
             value={toDevise}
-            onChange={(e) => setToDevise(e.target.value)}
-          >
-            {deviseOptions2}
-          </select>
+            onChange={setToDevise}
+            deviseList={deviseList}
+            label="Devise de destination"
+          />
         </div>
 
         <button className="convert-btn" onClick={() => convert()}>Convertir</button>
